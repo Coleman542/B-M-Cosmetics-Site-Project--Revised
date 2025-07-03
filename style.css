@@ -404,7 +404,7 @@ nav {
 }
 
 .featured-product-image-3 {
-    background: linear-gradient(to top, rgba(0,0,0,0.4)50%, rgba(0,0,0,0.4)50%), url('Eyeshadow.jpg');
+    background: linear-gradient(to top, rgba(0,0,0,0.4)50%, rgba(0,0,0,0.4)50%), url('EyeShadow.jpg');
     background-size: cover;
     background-position: center;
 }
