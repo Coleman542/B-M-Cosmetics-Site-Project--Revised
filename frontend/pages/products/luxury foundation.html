@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Luxury Foundation - B&M Cosmetics</title>
+    <link rel="stylesheet" href="../../assets/css/luxury foundation.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/frontend/index.html" class="logo-link">
+                <div class="logo">B&M Cosmetics</div>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="#shop">Shop</a></li>
+                <li class="nav-item"><a href="product.html">Products</a></li>
+                <li><a href="#blog">Blog</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <form class="search-bar" action="#" method="get">
+                <input type="text" placeholder="Search products..." name="q">
+                <button type="submit"><i class="fas fa-search"></i></button>
+            </form>
+            <div class="cart-container">
+                <button class="cart-icon" onclick="toggleCart()">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count" id="cartCount">0</span>
+                </button>
+                <div class="cart-dropdown" id="cartDropdown">
+                    <div class="cart-header">
+                        <h3>Your cart</h3>
+                        <span class="cart-items-count" id="cartItemsCount">0</span>
+                    </div>
+                    <div class="cart-items" id="cartItems">
+                        <div class="empty-cart">
+                            <p>Your cart is empty</p>
+                        </div>
+                    </div>
+                    <div class="cart-footer">
+                        <div class="cart-total">
+                            <strong>Total (EUR): €<span id="cartTotal">0.00</span></strong>
+                        </div>
+                        <button class="checkout-btn" onclick="proceedToCheckout()">Continue to checkout</button>
+                    </div>
+                </div>
+            </div>
+            <button class="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+    </header>
+    
+    <div class="breadcrumb">
+        <a href="/frontend/index.html">Home</a> > 
+        <a href="/frontend/index.html">Featured Products</a> > 
+        <span>Luxury Foundation</span>
+    </div>
+
+    <div class="product-detail-container">
+        <div class="product-images">
+            <div class="main-image">
+                <img id="mainImage" src="../../assets/images/general/Luxury Foundation.jpg" alt="Eye Shadow">
+            </div>
+        </div>
+        <div class="product-info">
+            <h1>Luxury Foundation</h1>
+            <div class="rating">
+                <span class="stars">★★★★</span>
+                <span class="review-count">(96 reviews)</span>
+            </div>
+            <div class="price">
+                <span class="current-price">€32.99</span>
+                <span class="original-price">€38.99</span>
+                <span class="discount">15% OFF</span>
+            </div>
+            <div class="product-description">
+                <h3>Description</h3>
+                <p>Our Luxury Foundation provides buildable medium-to-full coverage with a natural skin-like finish. This weightless formula blends seamlessly while hydrating skin for up to 24 hours.</p>
+                <h4>Key Benefits:</h4>
+                <ul>
+                    <li>Natural radiant finish</li>
+                    <li>Hydrating hyaluronic acid complex</li>
+                    <li>SPF 20 sun protection</li>
+                    <li>Oil-free, non-comedogenic</li>
+                    <li>30 shade range for all skin tones</li>
+                </ul>
+            </div>
+            <div class="product-options">
+                <div class="quantity-selector">
+                    <label for="quantity">Quantity:</label>
+                    <div class="quantity-controls">
+                        <button type="button" onclick="decreaseQuantity()">-</button>
+                        <input type="number" id="quantity" value="1" min="1">
+                        <button type="button" onclick="increaseQuantity()">+</button>
+                    </div>
+                </div>
+                <div class="action-buttons">
+                    <button class="add-to-cart-btn" onclick="addToCart()">Add to Cart</button>
+                    <button class="wishlist-btn" onclick="addToWishlist()">Add to Wishlist</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="product-tabs">
+        <div class="tab-buttons">
+            <button class="tab-button active" onclick="openTab(event, 'description')">Description</button>
+            <button class="tab-button" onclick="openTab(event, 'ingredients')">Ingredients</button>
+            <button class="tab-button" onclick="openTab(event, 'reviews')">Reviews</button>
+            <button class="tab-button" onclick="openTab(event, 'usage')">How to Use</button>
+        </div>
+        <div id="description" class="tab-content active">
+            <h3>Product Description</h3>
+            <p>This advanced formula features light-reflecting particles that blur imperfections while maintaining skin's natural texture.</p>
+            <p>The flexible wear adapts to your skin's needs throughout the day.</p>
+        </div>
+        <div id="ingredients" class="tab-content">
+            <h3>Full Ingredient List</h3>
+            <ul>
+                <li>Hyaluronic Acid</li>
+                <li>Titanium Dioxide (SPF 20)</li>
+                <li>Vitamin E</li>
+                <li>Squalane</li>
+                <li>Glycerin</li>
+            </ul>
+        </div>
+        <div id="reviews" class="tab-content">
+            <h3>Customer Reviews</h3>
+            <div class="review-summary">
+                <div class="rating-breakdown">
+                    <div class="overall-rating">
+                        <span class="stars">★★★★</span>
+                        <span class="rating-number">4.6/5</span>
+                    </div>
+                </div>
+            </div>
+            <div class="reviews-list">
+                <div class="review">
+                    <div class="reviewer-info">
+                        <strong>Olivia S.</strong>
+                        <span class="stars">★★★★★</span>
+                    </div>
+                    <p>"This foundation makes my skin look flawless but never cakey. It's my holy grail!"</p>
+                </div>
+                <div class="review">
+                    <div class="reviewer-info">
+                        <strong>Aisha M.</strong>
+                        <span class="stars">★★★★★</span>
+                    </div>
+                    <p>"Finally found my perfect shade match! Wears beautifully through my 12-hour shifts."</p>
+                </div>
+            </div>
+        </div>
+        <div id="usage" class="tab-content">
+            <h3>How to Use</h3>
+            <ol>
+                <li> Apply moisturizer and let absorb</li>
+                <li> Dispense 1-2 pumps on back of hand</li>
+                <li> Blend outward with brush, sponge, or fingers</li>
+                <li> Build coverage where needed</li>
+                <li> Set with powder for extended wear</li>
+            </ol>
+         </div>
+    </div>
+
+    <footer>
+        <div class="footer-background"></div>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>B&M Cosmetics</h3>
+                <p>Your trusted partner in beauty and self-expression. We believe every woman deserves to feel confident and beautiful.</p>
+                <div class="social-icons" style="margin-top: 1rem;">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="#shop">Shop</a><br>
+                <a href="product.html">Products</a><br>
+                <a href="#blog">Blog</a><br>
+                <a href="#about">About Us</a><br>
+                <a href="#contact">Contact</a>
+            </div>
+            <div class="footer-section">
+                <h3>Customer Care</h3>
+                <a href="#">Help Center</a><br>
+                <a href="#">Shipping Info</a><br>
+                <a href="#">Returns & Exchanges</a><br>
+                <a href="#">Size Guide</a><br>
+                <a href="#">Track Your Order</a>
+            </div>
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <a href="#">Privacy Policy</a><br>
+                <a href="#">Terms of Service</a><br>
+                <a href="#">Cookie Policy</a><br>
+                <a href="#">Accessibility</a><br>
+                <a href="#">Careers</a>
+            </div>
+            <div class="footer-section">
+                <h3>Newsletter</h3>
+                <p>Subscribe to get updates on new products and exclusive offers.</p>
+                <div style="margin-top: 1rem;">
+                    <input type="email" placeholder="Enter your email" class="newsletter-input">
+                    <button class="newsletter-btn">Subscribe</button>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 B&M Cosmetics. All rights reserved.</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/luxury foundation.js"></script>
+</body>
+</html>

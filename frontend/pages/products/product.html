@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Our Products - B&M Cosmetics</title>
+    <link rel="stylesheet" href="/frontend/assets/css/style.css">
+    <link rel="stylesheet" href="/frontend/assets/css/product.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/frontend/index.html" class="logo-link">
+                <div class="logo">B&M Cosmetics</div>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="#shop">Shop</a></li>
+                <li class="nav-item"><a href="product.html">Products</a></li>
+                <li><a href="#blog">Blog</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <form class="search-bar" action="#" method="get" style="display:inline-block; margin-left:1rem;">
+                <input type="text" placeholder="Search products..." name="q" style="padding:0.5rem; border-radius:4px; border:1px solid #ccc;">
+                <button type="submit" style="padding:0.5rem 1rem; border:none; background:#8B4513; color:#fff; border-radius:4px; margin-left:0.2rem;"><i class="fas fa-search"></i></button>
+            </form>
+            <a href="../cart/cart.html" class="cart-icon" style="margin-left:1rem; font-size:1.5rem; color:#8B4513;"><i class="fas fa-shopping-cart"></i></a>
+            <button class="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+    </header>
+
+    <div class="product-main">
+        <div class="product-hero">
+            <h1>Our Products</h1>
+            <p>Discover our premium collection of beauty and skincare essentials</p>
+        </div>
+
+        <section class="product-grid">
+            <div class="product-card">
+                <div class="product-image">
+                    <a href="/frontend/pages/products/hydrating-vitamin-c-serum.html" class="product-link">
+                        <img src="../../assets/images/products/hydrating vitamin c serum.jpg" alt="Hydrating Vitamin C Serum">
+                    </a>
+                </div>
+                <div class="product-info">
+                    <h3><a href="/frontend/pages/products/hydrating-vitamin-c-serum.html" class="product-link">Hydrating Vitamin C Serum</a></h3>
+                    <p class="product-price">€6.96</p>
+                    <button class="add-to-cart" onclick="addToCart('Hydrating Vitamin C Serum', 696)">Add to Cart</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">
+                    <a href="matte-lipstick.html" class="product-link">
+                        <img src="../../assets/images/products/Matte Lipstick.jpg" alt="Luxe Matte Lipstick">
+                    </a>
+                </div>
+                <div class="product-info">
+                    <h3><a href="matte-lipstick.html" class="product-link">Luxe Matte Lipstick</a></h3>
+                    <p class="product-price">€4.45</p>
+                    <button class="add-to-cart" onclick="addToCart('Luxe Matte Lipstick', 445)">Add to Cart</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">
+                    <a href="charcoal-detox-face-mask.html" class="product-link">
+                        <img src="../../assets/images/products/Charcoal Detox Face Mask.jpg" alt="Charcoal Detox Face Mask">
+                    </a>
+                </div>
+                <div class="product-info">
+                    <h3><a href="charcoal-detox-face-mask.html" class="product-link">Charcoal Detox Face Mask</a></h3>
+                    <p class="product-price">€5.29</p>
+                    <button class="add-to-cart" onclick="addToCart('Charcoal Detox Face Mask', 529)">Add to Cart</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">
+                    <a href="coconut-shea-hair-mask.html" class="product-link">
+                        <img src="../../assets/images/products/Coconut & Shea Hair Mask.jpg" alt="Coconut & Shea Hair Mask">
+                    </a>
+                </div>
+                <div class="product-info">
+                    <h3><a href="coconut-shea-hair-mask.html" class="product-link">Coconut & Shea Hair Mask</a></h3>
+                    <p class="product-price">€6.13</p>
+                    <button class="add-to-cart" onclick="addToCart('Coconut & Shea Hair Mask', 613)">Add to Cart</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">
+                    <a href="gold-eye-cream.html" class="product-link">
+                        <img src="../../assets/images/products/Gold Eye Cream.jpg" alt="Gold Eye Cream">
+                    </a>
+                </div>
+                <div class="product-info">
+                    <h3><a href="gold-eye-cream.html" class="product-link">Gold Eye Cream</a></h3>
+                    <p class="product-price">€8.35</p>
+                    <button class="add-to-cart" onclick="addToCart('Gold Eye Cream', 835)">Add to Cart</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">
+                    <a href="makeup-spray.html" class="product-link">
+                        <img src="/frontend/assets/images/products/Makeup Spray.jpg" alt="Makeup Spray">
+                    </a>
+                </div>
+                <div class="product-info">
+                    <h3><a href="makeup-spray.html" class="product-link">Makeup Spray</a></h3>
+                    <p class="product-price">€8.84</p>
+                    <button class="add-to-cart" onclick="addToCart('La Makeup Sponge', 884)">Add to Cart</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="../../assets/js/script.js"></script>
+</body>
+</html>
