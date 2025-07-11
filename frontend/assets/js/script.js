@@ -449,7 +449,200 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 500);
     }
 
-    console.log('🌟 B&M Cosmetics website loaded successfully! ✨');
+async function fetchAndDisplayProducts() {
+    try {
+        const response = await fetch('http://localhost:5000/api/products');
+        const products = await response.json();
+        const grid = document.querySelector('.product-grid');
+        if (grid && Array.isArray(products)) {
+            grid.innerHTML = '';
+            products.forEach(product => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <div class="product-image">
+                        <img src="../../assets/images/products/${product.image || 'default.jpg'}" alt="${product.name}">
+                    </div>
+                    <div class="product-info">
+                        <h3>${product.name}</h3>
+                        <p class="product-price">€${product.price}</p>
+                        <button class="add-to-cart" data-product-id="${product.id}">Add to Cart</button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+            grid.querySelectorAll('.add-to-cart').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const productId = this.getAttribute('data-product-id');
+                    addToCart(productId, 1);
+                });
+            });
+        }
+    } catch (err) {
+        console.error('Failed to fetch products:', err);
+    }
+}
+async function renderCartDropdown() {
+    const cartDropdown = document.getElementById('cartDropdown');
+    const cartItemsContainer = document.getElementById('cartItems');
+    const cartCount = document.getElementById('cartCount');
+    const cartItemsCount = document.getElementById('cartItemsCount');
+    const cartTotal = document.getElementById('cartTotal');
+    try {
+        const response = await fetch('http://localhost:5000/api/cart');
+        const cartItems = await response.json();
+        let total = 0;
+        let count = 0;
+        cartItemsContainer.innerHTML = '';
+        if (cartItems.length === 0) {
+            cartItemsContainer.innerHTML = '<div class="empty-cart"><p>Your cart is empty</p></div>';
+        } else {
+            cartItems.forEach(item => {
+                total += item.product.price * item.quantity;
+                count += item.quantity;
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'cart-item';
+                itemDiv.innerHTML = `
+                    <div class="cart-item-info">
+                        <span class="cart-item-name">${item.product.name}</span>
+                        <span class="cart-item-qty">x${item.quantity}</span>
+                        <span class="cart-item-price">€${(item.product.price * item.quantity).toFixed(2)}</span>
+                    </div>
+                    <button class="remove-cart-item" onclick="removeFromCart(${item.product.id}).then(renderCartDropdown)">Remove</button>
+                `;
+                cartItemsContainer.appendChild(itemDiv);
+            });
+        }
+        cartCount.textContent = count;
+        cartItemsCount.textContent = count;
+        cartTotal.textContent = total.toFixed(2);
+    } catch (err) {
+        cartItemsContainer.innerHTML = '<div class="empty-cart"><p>Failed to load cart</p></div>';
+    }
+}
+
+function toggleCart() {
+    const dropdown = document.getElementById('cartDropdown');
+    dropdown.classList.toggle('show');
+}
+
+renderCartDropdown();
+
+async function addToCart(productId, quantity = 1) {
+    const response = await fetch('http://localhost:5000/api/cart/add', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ product_id: productId, quantity })
+    });
+    const result = await response.json();
+    if (response.ok) {
+        showNotification('Item added to cart!', 'success');
+        renderCartDropdown();
+    } else {
+        showNotification(result.error || 'Failed to add to cart', 'error');
+    }
+}
+
+async function removeFromCart(productId) {
+    const response = await fetch('http://localhost:5000/api/cart/remove', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ product_id: productId })
+    });
+    const result = await response.json();
+    if (response.ok) {
+        showNotification('Item removed from cart!', 'success');
+        renderCartDropdown();
+    } else {
+        showNotification(result.error || 'Failed to remove from cart', 'error');
+    }
+}
+
+async function fetchCart() {
+    const response = await fetch('http://localhost:5000/api/cart');
+    const cartItems = await response.json();
+}
+
+
+const SUPABASE_URL = 'https://qenuqqsoafdsxqltydlf.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFlbnVxcXNvYWZkc3hxbHR5ZGxmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTIxMzY3MDksImV4cCI6MjA2NzcxMjcwOX0.LY72T3fXGPAr8thAVPKS6dsOlITTvlV7RqGKYpSeVDg';
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+function showUserUI(user) {
+    document.querySelector('.cart-container').style.display = '';
+    document.querySelector('.search-bar').style.display = '';
+    document.getElementById('loginSection').style.display = 'none';
+    document.getElementById('userSection').style.display = '';
+    document.getElementById('userName').textContent = user.user_metadata?.full_name || user.email;
+    document.getElementById('userEmail').textContent = user.email;
+}
+
+function showGuestUI() {
+    document.querySelector('.cart-container').style.display = 'none';
+    document.querySelector('.search-bar').style.display = 'none';
+    document.getElementById('loginSection').style.display = '';
+    document.getElementById('userSection').style.display = 'none';
+}
+
+async function checkAuthAndUI() {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (user) {
+        showUserUI(user);
+    } else {
+        showGuestUI();
+    }
+    // Hide loader after auth check
+    if (typeof hidePageLoader === 'function') hidePageLoader();
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    checkAuthAndUI();
+    const userIcon = document.getElementById('userIcon');
+    const userDropdown = document.getElementById('userDropdown');
+    if (userIcon && userDropdown) {
+        userIcon.addEventListener('click', function() {
+            userDropdown.style.display = userDropdown.style.display === 'block' ? 'none' : 'block';
+        });
+        document.addEventListener('click', function(e) {
+            if (!userIcon.contains(e.target) && !userDropdown.contains(e.target)) {
+                userDropdown.style.display = 'none';
+            }
+        });
+    }
+
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', async function() {
+            await supabase.auth.signOut();
+            showGuestUI();
+            showNotification('Logged out successfully', 'success');
+        });
+    }
 });
 
-console.log('%c✨ Welcome to B&M Cosmetics! ✨', 'color: #d4a574; font-size: 20px; font-weight: bold;');
+function getHomeRedirectUrl() {
+    const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    return isLocal
+        ? '/frontend/index.html'
+        : 'https://coleman542.github.io/B-M-Cosmetics-Site-Project--Revised/frontend/index.html';
+}
+
+supabase.auth.onAuthStateChange((event, session) => {
+    if (event === 'SIGNED_IN' && session) {
+        const homeUrl = getHomeRedirectUrl();
+        if (window.location.pathname !== '/frontend/index.html') {
+            window.location.href = homeUrl;
+        } else {
+            checkAuthAndUI();
+        }
+    }
+});
+
+async function redirectIfNotLoggedIn() {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user && !window.location.pathname.includes('/frontend/pages/auth/login.html')) {
+        window.location.href = '/frontend/pages/auth/login.html';
+    }
+}
+redirectIfNotLoggedIn();
+});

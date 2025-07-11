@@ -5,6 +5,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/frontend/assets/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.7/dist/umd/supabase.min.js"></script>
 </head>
 <body>
     
@@ -22,13 +23,51 @@
                 <li><a href="#about">About</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
-            <div class="login-section">
+            <div class="login-section" id="loginSection">
                 <a href="/frontend/pages/auth/login.html" class="login-btn">Login</a>
-                <a href="/frontend/pages/auth/login.html" class="signup-link">Sign Up</a>
+                <a href="/frontend/pages/auth/login.html?signup=1" class="signup-link" id="signupLink">Sign Up</a>
                 <div class="social-icons">
                     <a href="#"><i class="fab fa-facebook-f"></i></a>
                     <a href="#"><i class="fab fa-twitter"></i></a>
                     <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="user-section" id="userSection" style="display:none;">
+                <button class="user-icon" id="userIcon"><i class="fas fa-user-circle"></i></button>
+                <div class="user-dropdown" id="userDropdown" style="display:none;">
+                    <div class="user-info">
+                        <span id="userName">User</span><br>
+                        <span id="userEmail">user@email.com</span>
+                    </div>
+                    <button id="logoutBtn">Logout</button>
+                </div>
+            </div>
+            
+            <form class="search-bar" action="#" method="get" style="display:none;">
+                <input type="text" placeholder="Search products..." name="q">
+                <button type="submit"><i class="fas fa-search"></i></button>
+            </form>
+            <div class="cart-container" style="display:none;">
+                <button class="cart-icon" onclick="toggleCart()">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count" id="cartCount">0</span>
+                </button>
+                <div class="cart-dropdown" id="cartDropdown">
+                    <div class="cart-header">
+                        <h3>Your cart</h3>
+                        <span class="cart-items-count" id="cartItemsCount">0</span>
+                    </div>
+                    <div class="cart-items" id="cartItems">
+                        <div class="empty-cart">
+                            <p>Your cart is empty</p>
+                        </div>
+                    </div>
+                    <div class="cart-footer">
+                        <div class="cart-total">
+                            <strong>Total (EUR): €<span id="cartTotal">0.00</span></strong>
+                        </div>
+                        <button class="checkout-btn" onclick="proceedToCheckout()">Continue to checkout</button>
+                    </div>
                 </div>
             </div>
             <button class="mobile-menu-toggle">
@@ -186,5 +225,73 @@
     </footer>
 
     <script src="../frontend/assets/js/script.js"></script>
+    <script>
+function showPageLoader() {
+    let loader = document.getElementById('pageLoaderLogin');
+    if (loader) return;
+    loader = document.createElement('div');
+    loader.id = 'pageLoaderLogin';
+    loader.innerHTML = `
+        <div style="
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg, #d4a574 0%, #e8c4a0 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;">
+            <div style="
+                font-family: 'Playfair Display', serif;
+                font-size: 3rem;
+                color: white;
+                text-align: center;
+                animation: pulse 1.5s ease-in-out infinite;">
+                <span style='background: linear-gradient(135deg, #d4a574 0%, #e8c4a0 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;'>B&M Cosmetics</span>
+                <div style="
+                    font-family: 'Inter', sans-serif;
+                    font-size: 1.1rem;
+                    opacity: 0.8;">Loading...</div>
+                <div style="
+                    width: 50px;
+                    height: 3px;
+                    background: white;
+                    margin: 1.5rem auto;
+                    border-radius: 2px;
+                    animation: loading 1s ease-in-out infinite;"></div>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(loader);
+    setTimeout(() => {
+        loader.style.opacity = '0';
+        setTimeout(() => {
+            if (document.body.contains(loader)) {
+                document.body.removeChild(loader);
+            }
+        }, 500);
+    }, 4000); // Loader now stays for 4 seconds
+}
+function hidePageLoader() {
+    const loader = document.getElementById('pageLoaderLogin');
+    if (loader) {
+        loader.style.opacity = '0';
+        setTimeout(() => {
+            if (document.body.contains(loader)) {
+                document.body.removeChild(loader);
+            }
+        }, 500);
+    }
+}
+document.querySelectorAll('.login-btn, .signup-link').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+        showPageLoader();
+        // Let the redirect happen, loader will be visible until login page loads
+    });
+});
+</script>
 </body>
 </html>

@@ -170,4 +170,17 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     `;
     document.head.appendChild(style);
+    
+    const searchForm = document.querySelector('.search-bar');
+    if (searchForm) {
+        searchForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const query = this.q.value.trim();
+            if (query) {
+                showNotification(`Searching for: ${query}`, 'info');
+            } else {
+                showNotification('Please enter a search term.', 'error');
+            }
+        });
+    }
 });

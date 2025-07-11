@@ -86,34 +86,39 @@
 }
 
 .search-bar {
+    display: inline-block;
+    margin-left: 1rem;
+}
+
+.search-bar input {
     padding: 0.5rem 1rem;
-    border: 2px solid #e0e0e0;
     border-radius: 25px;
+    border: 1px solid var(--primary-color);
+    min-width: 180px;
     outline: none;
-    font-size: 0.9rem;
-    transition: all 0.3s ease;
-    width: 200px;
+    transition: var(--transition);
 }
 
-.search-bar:focus {
-    border-color: #ccc;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+.search-bar input:focus {
+    border-color: white;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2);
 }
 
-.search-btn {
-    background: linear-gradient(135deg, #FAFAFA 0%, #F0F0F0 50%, #E0E0E0 100%);
+.search-bar button {
+    padding: 0.5rem 1.2rem;
     border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 25px;
+    background: var(--gradient-primary);
     color: white;
+    border-radius: 25px;
+    margin-left: 0.2rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: var(--transition);
 }
 
-.search-btn:hover {
-    background: linear-gradient(135deg, #FAFAFA 0%, #F0F0F0 50%, #E0E0E0 100%);
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+.search-bar button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(212, 165, 116, 0.3);
 }
 
 .product-grid {
